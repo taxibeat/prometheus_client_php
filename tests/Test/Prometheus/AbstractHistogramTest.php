@@ -383,9 +383,11 @@ abstract class AbstractHistogramTest extends PHPUnit_Framework_TestCase
             'some_metric',
             'this is for testing',
             array('foo', 'bar'),
-            array(100, 200, 300),
-            ['test_foo' => 'test_bar']
+            array(100, 200, 300)
         );
+
+        $histogram->applyDefaultLabels(['test_foo' => 'test_bar']);
+
         $histogram->observe(123, array('lalal', 'lululu'));
         $histogram->observe(245, array('lalal', 'lululu'));
 
@@ -455,9 +457,11 @@ abstract class AbstractHistogramTest extends PHPUnit_Framework_TestCase
             'some_metric',
             'this is for testing',
             array(),
-            array(100, 200, 300),
-            ['test_foo' => 'test_bar']
+            array(100, 200, 300)
         );
+
+        $histogram->applyDefaultLabels(['test_foo' => 'test_bar']);
+
         $histogram->observe(245);
         $this->assertThat(
             $this->adapter->collect(),

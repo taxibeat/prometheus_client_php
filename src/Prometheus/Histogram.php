@@ -18,10 +18,11 @@ class Histogram extends Collector
      * @param string $help
      * @param array $labels
      * @param array $buckets
+     * @param array $defaultLabels
      */
-    public function __construct(Adapter $adapter, $namespace, $name, $help, $labels = array(), $buckets = null)
+    public function __construct(Adapter $adapter, $namespace, $name, $help, $labels = array(), $buckets = null, array $defaultLabels = [])
     {
-        parent::__construct($adapter, $namespace, $name, $help, $labels);
+        parent::__construct($adapter, $namespace, $name, $help, $labels, $defaultLabels);
 
         if (null === $buckets) {
             $buckets = self::getDefaultBuckets();
@@ -64,6 +65,8 @@ class Histogram extends Collector
      */
     public function observe($value, $labels = array())
     {
+        $labels = $this->setDefaultLabelValues($labels);
+
         $this->assertLabelsAreDefinedCorrectly($labels);
 
         $this->storageAdapter->updateHistogram(

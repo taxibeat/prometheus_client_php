@@ -63,7 +63,10 @@ abstract class AbstractGaugeTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldAllowSetWithLabelsAndDefaults()
     {
-        $gauge = new Gauge($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'),  ['test_foo' => 'test_bar']);
+        $gauge = new Gauge($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
+
+        $gauge->applyDefaultLabels(['test_foo' => 'test_bar']);
+
         $gauge->set(123, array('lalal', 'lululu'));
         $this->assertThat(
             $this->adapter->collect(),
@@ -97,7 +100,10 @@ abstract class AbstractGaugeTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldAllowSetWithoutLabelsAndDefaults()
     {
-        $gauge = new Gauge($this->adapter, 'test', 'some_metric', 'this is for testing', array(), ['test_foo' => 'test_bar']);
+        $gauge = new Gauge($this->adapter, 'test', 'some_metric', 'this is for testing', array());
+
+        $gauge->applyDefaultLabels(['test_foo' => 'test_bar']);
+
         $gauge->set(123, array());
         $this->assertThat(
             $this->adapter->collect(),
@@ -232,7 +238,10 @@ abstract class AbstractGaugeTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldIncrementAValueAndDefaults()
     {
-        $gauge = new Gauge($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'), ['test_foo' => 'test_bar']);
+        $gauge = new Gauge($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
+
+        $gauge->applyDefaultLabels(['test_foo' => 'test_bar']);
+
         $gauge->inc(array('lalal', 'lululu'));
         $gauge->incBy(123, array('lalal', 'lululu'));
         $this->assertThat(

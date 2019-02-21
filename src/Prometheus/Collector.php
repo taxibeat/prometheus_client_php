@@ -13,6 +13,7 @@ abstract class Collector
     protected $name;
     protected $help;
     protected $labels;
+    protected $defaultLabels;
 
     /**
      * @param Adapter $storageAdapter
@@ -20,6 +21,7 @@ abstract class Collector
      * @param string $name
      * @param string $help
      * @param array $labels
+     * @param array $defaultLabels
      */
     public function __construct(Adapter $storageAdapter, $namespace, $name, $help, $labels = array())
     {
@@ -36,6 +38,12 @@ abstract class Collector
             }
         }
         $this->labels = $labels;
+    }
+
+    public function applyDefaultLabels(array $defaultLabels = [])
+    {
+        $this->defaultLabels = $defaultLabels;
+        $this->setDefaultLabels();
     }
 
     /**
@@ -71,5 +79,20 @@ abstract class Collector
         if (count($labels) != count($this->labels)) {
             throw new \InvalidArgumentException(sprintf('Labels are not defined correctly: ', print_r($labels, true)));
         }
+    }
+
+    protected function setDefaultLabels()
+    {
+        if (!empty($this->defaultLabels)) {
+            $this->labels = array_merge($this->labels, array_keys($this->defaultLabels));
+        }
+    }
+
+    protected function setDefaultLabelValues(array $labels)
+    {
+        if (!empty($this->defaultLabels)) {
+            return array_merge($labels, array_values($this->defaultLabels));
+        }
+        return $labels;
     }
 }

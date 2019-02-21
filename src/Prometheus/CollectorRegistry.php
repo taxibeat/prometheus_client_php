@@ -16,6 +16,8 @@ class CollectorRegistry
      */
     private static $defaultRegistry;
 
+    private $defaultLabels;
+
     /**
      * @var Adapter
      */
@@ -36,6 +38,11 @@ class CollectorRegistry
     public function __construct(Adapter $redisAdapter)
     {
         $this->storageAdapter = $redisAdapter;
+    }
+
+    public function applyDefaultLabels(array $defaultLabels = [])
+    {
+        $this->defaultLabels = $defaultLabels;
     }
 
     /**
@@ -78,6 +85,11 @@ class CollectorRegistry
             $help,
             $labels
         );
+
+        if($this->defaultLabels) {
+            $this->gauges[$metricIdentifier]->applyDefaultLabels($this->defaultLabels);
+        }
+
         return $this->gauges[$metricIdentifier];
     }
 
@@ -134,6 +146,11 @@ class CollectorRegistry
             $help,
             $labels
         );
+
+        if($this->defaultLabels) {
+            $this->counters[$metricIdentifier]->applyDefaultLabels($this->defaultLabels);
+        }
+
         return $this->counters[self::metricIdentifier($namespace, $name)];
     }
 
@@ -192,6 +209,11 @@ class CollectorRegistry
             $labels,
             $buckets
         );
+
+        if($this->defaultLabels) {
+            $this->histograms[$metricIdentifier]->applyDefaultLabels($this->defaultLabels);
+        }
+
         return $this->histograms[$metricIdentifier];
     }
 

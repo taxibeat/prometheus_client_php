@@ -63,10 +63,13 @@ abstract class AbstractCounterTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldIncreaseWithLabelsAndDefaults()
     {
-        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'), ['test_foo' => 'test_bar']);
-        $gauge->inc(array('lalal', 'lululu'));
-        $gauge->inc(array('lalal', 'lululu'));
-        $gauge->inc(array('lalal', 'lululu'));
+        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
+
+        $counter->applyDefaultLabels(['test_foo' => 'test_bar']);
+
+        $counter->inc(array('lalal', 'lululu'));
+        $counter->inc(array('lalal', 'lululu'));
+        $counter->inc(array('lalal', 'lululu'));
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
@@ -97,10 +100,13 @@ abstract class AbstractCounterTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldIncreaseWithoutLabelsAndDefaults()
     {
-        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array(), ['test_foo' => 'test_bar']);
-        $gauge->inc(array());
-        $gauge->inc(array());
-        $gauge->inc(array());
+        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array());
+
+        $counter->applyDefaultLabels(['test_foo' => 'test_bar']);
+
+        $counter->inc(array());
+        $counter->inc(array());
+        $counter->inc(array());
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
@@ -196,9 +202,12 @@ abstract class AbstractCounterTest extends PHPUnit_Framework_TestCase
      */
     public function itShouldIncreaseTheCounterByAnArbitraryIntegerAndDefaults()
     {
-        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'), ['test_foo' => 'test_bar']);
-        $gauge->inc(array('lalal', 'lululu'));
-        $gauge->incBy(123, array('lalal', 'lululu'));
+        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
+
+        $counter->applyDefaultLabels(['test_foo' => 'test_bar']);
+
+        $counter->inc(array('lalal', 'lululu'));
+        $counter->incBy(123, array('lalal', 'lululu'));
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
