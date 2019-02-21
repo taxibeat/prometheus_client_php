@@ -61,6 +61,74 @@ abstract class AbstractCounterTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function itShouldIncreaseWithLabelsAndDefaults()
+    {
+        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'), ['test_foo' => 'test_bar']);
+        $gauge->inc(array('lalal', 'lululu'));
+        $gauge->inc(array('lalal', 'lululu'));
+        $gauge->inc(array('lalal', 'lululu'));
+        $this->assertThat(
+            $this->adapter->collect(),
+            $this->equalTo(
+                array(
+                    new MetricFamilySamples(
+                        array(
+                            'type' => Counter::TYPE,
+                            'help' => 'this is for testing',
+                            'name' => 'test_some_metric',
+                            'labelNames' => array('foo', 'bar', 'test_foo'),
+                            'samples' => array(
+                                array(
+                                    'labelValues' => array('lalal', 'lululu', 'test_bar'),
+                                    'value' => 3,
+                                    'name' => 'test_some_metric',
+                                    'labelNames' => array()
+                                ),
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldIncreaseWithoutLabelsAndDefaults()
+    {
+        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array(), ['test_foo' => 'test_bar']);
+        $gauge->inc(array());
+        $gauge->inc(array());
+        $gauge->inc(array());
+        $this->assertThat(
+            $this->adapter->collect(),
+            $this->equalTo(
+                array(
+                    new MetricFamilySamples(
+                        array(
+                            'type' => Counter::TYPE,
+                            'help' => 'this is for testing',
+                            'name' => 'test_some_metric',
+                            'labelNames' => array('test_foo'),
+                            'samples' => array(
+                                array(
+                                    'labelValues' => array('test_bar'),
+                                    'value' => 3,
+                                    'name' => 'test_some_metric',
+                                    'labelNames' => array()
+                                ),
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     * @test
+     */
     public function itShouldIncreaseWithoutLabelWhenNoLabelsAreDefined()
     {
         $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing');
@@ -123,6 +191,38 @@ abstract class AbstractCounterTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function itShouldIncreaseTheCounterByAnArbitraryIntegerAndDefaults()
+    {
+        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'), ['test_foo' => 'test_bar']);
+        $gauge->inc(array('lalal', 'lululu'));
+        $gauge->incBy(123, array('lalal', 'lululu'));
+        $this->assertThat(
+            $this->adapter->collect(),
+            $this->equalTo(
+                array(
+                    new MetricFamilySamples(
+                        array(
+                            'type' => Counter::TYPE,
+                            'help' => 'this is for testing',
+                            'name' => 'test_some_metric',
+                            'labelNames' => array('foo', 'bar', 'test_foo'),
+                            'samples' => array(
+                                array(
+                                    'labelValues' => array('lalal', 'lululu', 'test_bar'),
+                                    'value' => 124,
+                                    'name' => 'test_some_metric',
+                                    'labelNames' => array()
+                                ),
+                            )
+                        )
+                    )
+                )
+            )
+        );
+    }
     /**
      * @test
      * @expectedException \InvalidArgumentException
