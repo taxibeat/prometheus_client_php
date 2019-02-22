@@ -21,7 +21,6 @@ abstract class Collector
      * @param string $name
      * @param string $help
      * @param array $labels
-     * @param array $defaultLabels
      */
     public function __construct(Adapter $storageAdapter, $namespace, $name, $help, $labels = array())
     {

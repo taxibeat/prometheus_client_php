@@ -16,6 +16,9 @@ class CollectorRegistry
      */
     private static $defaultRegistry;
 
+    /**
+     * @var array
+     */
     private $defaultLabels;
 
     /**
@@ -114,6 +117,7 @@ class CollectorRegistry
      * @param string $help e.g. The duration something took in seconds.
      * @param array $labels e.g. ['controller', 'action']
      * @return Gauge
+     * @throws MetricsRegistrationException
      */
     public function getOrRegisterGauge($namespace, $name, $help, $labels = array())
     {
@@ -175,6 +179,7 @@ class CollectorRegistry
      * @param string $help e.g. The number of requests made.
      * @param array $labels e.g. ['controller', 'action']
      * @return Counter
+     * @throws MetricsRegistrationException
      */
     public function getOrRegisterCounter($namespace, $name, $help, $labels = array())
     {
