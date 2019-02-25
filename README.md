@@ -83,6 +83,17 @@ $renderer = new RenderTextFormat();
 $result = $renderer->render($registry->getMetricFamilySamples());
 ```
 
+You can now add default metrics (e.g. environment variables).
+
+This can be especially useful in situations like CLI applications
+where you might want to add default configuration:
+
+```php
+$registry = new CollectorRegistry(new InMemory());
+
+$registry->applyDefaultLabels(['static_label' => 'static_value']);
+```
+
 Also look at the [examples](examples).
 
 ## Development

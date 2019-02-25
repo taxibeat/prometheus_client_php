@@ -20,6 +20,8 @@ if ($adapter === 'redis') {
 }
 $registry = new CollectorRegistry($adapter);
 
+$registry->applyDefaultLabels(['test_label' => 'test_value']);
+
 $gauge = $registry->registerGauge('test', 'some_gauge', 'it sets', ['type']);
 $gauge->set($_GET['c'], ['blue']);
 
