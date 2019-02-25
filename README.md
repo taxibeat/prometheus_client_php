@@ -1,6 +1,6 @@
 # A prometheus client library written in PHP
 
-[![Build Status](https://travis-ci.org/Jimdo/prometheus_client_php.svg?branch=master)](https://travis-ci.org/Jimdo/prometheus_client_php)
+[![Build Status](https://travis-ci.org/taxibeat/prometheus_client_php.svg?branch=master)](https://travis-ci.org/taxibeat/prometheus_client_php)
 
 This library uses Redis or APCu to do the client side aggregation.
 If using Redis, we recommend to run a local Redis instance next to your PHP workers.
@@ -81,6 +81,23 @@ $counter->incBy(3, ['blue']);
 
 $renderer = new RenderTextFormat();
 $result = $renderer->render($registry->getMetricFamilySamples());
+```
+
+You can now add default metrics (e.g. environment variables).
+
+This can be especially useful in situations like CLI applications
+with APC adapter, that does not share the same memory for fpm and 
+all the other CLI processes.
+
+In this case the use of push gateway comes in handy, but makes it hard to pass metrics that remain static. 
+
+`applyDefaultLabels` aims to bridge this gap, 
+by giving you the ability to add default configuration:
+
+```php
+$registry = new CollectorRegistry(new InMemory());
+
+$registry->applyDefaultLabels(['host' => $_SERVER['SERVER_NAME']]);
 ```
 
 Also look at the [examples](examples).
