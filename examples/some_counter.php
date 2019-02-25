@@ -17,8 +17,6 @@ if ($adapter === 'redis') {
 }
 $registry = new CollectorRegistry($adapter);
 
-$registry->applyDefaultLabels(['test_label' => 'test_value']);
-
 $counter = $registry->registerCounter('test', 'some_counter', 'it increases', ['type']);
 $counter->incBy($_GET['c'], ['blue']);
 
