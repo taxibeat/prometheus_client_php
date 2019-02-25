@@ -18,7 +18,6 @@ class Histogram extends Collector
      * @param string $help
      * @param array $labels
      * @param array $buckets
-     * @param array $defaultLabels
      */
     public function __construct(Adapter $adapter, $namespace, $name, $help, $labels = array(), $buckets = null)
     {
