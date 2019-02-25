@@ -20,9 +20,9 @@ class Histogram extends Collector
      * @param array $buckets
      * @param array $defaultLabels
      */
-    public function __construct(Adapter $adapter, $namespace, $name, $help, $labels = array(), $buckets = null, array $defaultLabels = [])
+    public function __construct(Adapter $adapter, $namespace, $name, $help, $labels = array(), $buckets = null)
     {
-        parent::__construct($adapter, $namespace, $name, $help, $labels, $defaultLabels);
+        parent::__construct($adapter, $namespace, $name, $help, $labels);
 
         if (null === $buckets) {
             $buckets = self::getDefaultBuckets();

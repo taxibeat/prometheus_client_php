@@ -43,6 +43,10 @@ class CollectorRegistry
         $this->storageAdapter = $redisAdapter;
     }
 
+    /**
+     * @param array $defaultLabels
+     * @return void
+     */
     public function applyDefaultLabels(array $defaultLabels = [])
     {
         $this->defaultLabels = $defaultLabels;
