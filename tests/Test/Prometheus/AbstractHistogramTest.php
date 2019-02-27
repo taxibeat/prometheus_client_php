@@ -1,19 +1,16 @@
 <?php
 
-
 namespace Test\Prometheus;
 
-use PHPUnit_Framework_TestCase;
 use Prometheus\Histogram;
 use Prometheus\MetricFamilySamples;
 use Prometheus\Sample;
 use Prometheus\Storage\Adapter;
 
-
 /**
  * See https://prometheus.io/docs/instrumenting/exposition_formats/
  */
-abstract class AbstractHistogramTest extends PHPUnit_Framework_TestCase
+abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Adapter

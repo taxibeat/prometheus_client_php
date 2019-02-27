@@ -6,7 +6,7 @@ namespace Prometheus\Storage;
 /**
  * @requires extension redis
  */
-class RedisTest extends \PHPUnit_Framework_TestCase
+class RedisTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test
