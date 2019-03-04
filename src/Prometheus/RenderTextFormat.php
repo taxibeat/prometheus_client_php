@@ -11,7 +11,7 @@ class RenderTextFormat
      * @param MetricFamilySamples[] $metrics
      * @return string
      */
-    public function render(array $metrics)
+    public function render(array $metrics) : string
     {
         usort($metrics, function(MetricFamilySamples $a, MetricFamilySamples $b)
         {
@@ -30,7 +30,7 @@ class RenderTextFormat
         return implode("\n", $lines) . "\n";
     }
 
-    private function renderSample(MetricFamilySamples $metric, Sample $sample)
+    private function renderSample(MetricFamilySamples $metric, Sample $sample) : string
     {
         $escapedLabels = [];
 
@@ -45,7 +45,7 @@ class RenderTextFormat
         return $sample->getName() . ' ' . $sample->getValue();
     }
 
-    private function escapeLabelValue($v)
+    private function escapeLabelValue(string $v) : string
     {
         $v = str_replace("\\", "\\\\", $v);
         $v = str_replace("\n", "\\n", $v);

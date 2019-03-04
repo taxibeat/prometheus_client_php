@@ -13,14 +13,14 @@ class Gauge extends Collector
      * @param double $value e.g. 123
      * @param array $labels e.g. ['status', 'opcode']
      */
-    public function set($value, $labels = [])
+    public function set($value, array $labels = []) : void
     {
         $labels = $this->setDefaultLabelValues($labels);
 
         $this->assertLabelsAreDefinedCorrectly($labels);
 
         $this->storageAdapter->updateGauge(
-            array(
+            [
                 'name' => $this->getName(),
                 'help' => $this->getHelp(),
                 'type' => $this->getType(),
@@ -28,31 +28,36 @@ class Gauge extends Collector
                 'labelValues' => $labels,
                 'value' => $value,
                 'command' => Adapter::COMMAND_SET
-            )
+            ]
         );
     }
 
     /**
      * @return string
      */
-    public function getType()
+    public function getType() : string
     {
         return self::TYPE;
     }
 
-    public function inc($labels = [])
+    public function inc(array $labels = []) : void
     {
         $this->incBy(1, $labels);
     }
 
-    public function incBy($value, $labels = [])
+    /**
+     * @param  float $value
+     * @param  array $labels
+     * @return void
+     */
+    public function incBy(float $value, array $labels = []) : void
     {
         $labels = $this->setDefaultLabelValues($labels);
 
         $this->assertLabelsAreDefinedCorrectly($labels);
 
         $this->storageAdapter->updateGauge(
-            array(
+            [
                 'name' => $this->getName(),
                 'help' => $this->getHelp(),
                 'type' => $this->getType(),
@@ -60,16 +65,16 @@ class Gauge extends Collector
                 'labelValues' => $labels,
                 'value' => $value,
                 'command' => Adapter::COMMAND_INCREMENT_FLOAT
-            )
+            ]
         );
     }
 
-    public function dec($labels = [])
+    public function dec(array $labels = []) : void
     {
         $this->decBy(1, $labels);
     }
 
-    public function decBy($value, $labels = [])
+    public function decBy(int $value, $labels = []) : void
     {
         $this->incBy(-$value, $labels);
     }

@@ -12,7 +12,7 @@ class Counter extends Collector
     /**
      * @return string
      */
-    public function getType()
+    public function getType() : string
     {
         return self::TYPE;
     }
@@ -20,7 +20,7 @@ class Counter extends Collector
     /**
      * @param array $labels e.g. ['status', 'opcode']
      */
-    public function inc(array $labels = [])
+    public function inc(array $labels = []) : void
     {
         $this->incBy(1, $labels);
     }
@@ -29,7 +29,7 @@ class Counter extends Collector
      * @param int $count e.g. 2
      * @param array $labels e.g. ['status', 'opcode']
      */
-    public function incBy($count, array $labels = [])
+    public function incBy(int $count, array $labels = []) : void
     {
         $labels = $this->setDefaultLabelValues($labels);
 

@@ -21,7 +21,7 @@ class Sample
     /**
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -29,17 +29,17 @@ class Sample
     /**
      * @return array
      */
-    public function getLabelNames()
+    public function getLabelNames() : array 
     {
-        return (array)$this->labelNames;
+        return (array) $this->labelNames;
     }
 
     /**
      * @return array
      */
-    public function getLabelValues()
+    public function getLabelValues() : array
     {
-        return (array)$this->labelValues;
+        return (array) $this->labelValues;
     }
 
     /**
@@ -53,7 +53,7 @@ class Sample
     /**
      * @return bool
      */
-    public function hasLabelNames()
+    public function hasLabelNames() : bool
     {
         return !empty($this->labelNames);
     }

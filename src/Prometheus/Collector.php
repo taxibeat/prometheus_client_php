@@ -21,8 +21,8 @@ abstract class Collector
      * @param string $name
      * @param string $help
      * @param array $labels
-     */
-    public function __construct(Adapter $storageAdapter, $namespace, $name, $help, $labels = [])
+     */ 
+    public function __construct(Adapter $storageAdapter, string $namespace, string $name, string $help, array $labels = [])
     {
         $this->storageAdapter = $storageAdapter;
         $metricName = ($namespace ? $namespace . '_' : '') . $name;
@@ -39,7 +39,7 @@ abstract class Collector
         $this->labels = $labels;
     }
 
-    public function applyDefaultLabels(array $defaultLabels = [])
+    public function applyDefaultLabels(array $defaultLabels = []) : void
     {
         $this->defaultLabels = $defaultLabels;
         $this->setDefaultLabels();
@@ -50,22 +50,22 @@ abstract class Collector
      */
     public abstract function getType();
 
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
-    public function getLabelNames()
+    public function getLabelNames() : array
     {
         return $this->labels;
     }
 
-    public function getHelp()
+    public function getHelp() : string
     {
         return $this->help;
     }
 
-    public function getKey()
+    public function getKey() : string
     {
         return sha1($this->getName() . serialize($this->getLabelNames()));
     }
@@ -73,21 +73,21 @@ abstract class Collector
     /**
      * @param $labels
      */
-    protected function assertLabelsAreDefinedCorrectly($labels)
+    protected function assertLabelsAreDefinedCorrectly(array $labels) : void
     {
         if (count($labels) != count($this->labels)) {
             throw new \InvalidArgumentException(sprintf('Labels are not defined correctly: ', print_r($labels, true)));
         }
     }
 
-    protected function setDefaultLabels()
+    protected function setDefaultLabels() : void
     {
         if (!empty($this->defaultLabels)) {
             $this->labels = array_merge($this->labels, array_keys($this->defaultLabels));
         }
     }
 
-    protected function setDefaultLabelValues(array $labels)
+    protected function setDefaultLabelValues(array $labels) : array
     {
         if (!empty($this->defaultLabels)) {
             return array_merge($labels, array_values($this->defaultLabels));
