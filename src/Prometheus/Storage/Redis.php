@@ -105,14 +105,14 @@ if increment == ARGV[1] then
 end
 LUA
             ,
-            array(
+            [
                 $this->toMetricKey($data),
-                json_encode(array('b' => 'sum', 'labelValues' => $data['labelValues'])),
-                json_encode(array('b' => $bucketToIncrease, 'labelValues' => $data['labelValues'])),
+                json_encode(['b' => 'sum', 'labelValues' => $data['labelValues']]),
+                json_encode(['b' => $bucketToIncrease, 'labelValues' => $data['labelValues']]),
                 self::$prefix . Histogram::TYPE . self::PROMETHEUS_METRIC_KEYS_SUFFIX,
                 $data['value'],
                 json_encode($metaData),
-            ),
+            ],
             4
         );
     }
@@ -140,14 +140,14 @@ else
 end
 LUA
             ,
-            array(
+            [
                 $this->toMetricKey($data),
                 $this->getRedisCommand($data['command']),
                 self::$prefix . Gauge::TYPE . self::PROMETHEUS_METRIC_KEYS_SUFFIX,
                 json_encode($data['labelValues']),
                 $data['value'],
                 json_encode($metaData),
-            ),
+            ],
             4
         );
     }
@@ -234,40 +234,40 @@ LUA
                 // the previous one.
                 $acc = 0;
                 foreach ($histogram['buckets'] as $bucket) {
-                    $bucketKey = json_encode(array('b' => $bucket, 'labelValues' => $labelValues));
+                    $bucketKey = json_encode(['b' => $bucket, 'labelValues' => $labelValues]);
                     if (!isset($raw[$bucketKey])) {
-                        $histogram['samples'][] = array(
+                        $histogram['samples'][] = [
                             'name' => $histogram['name'] . '_bucket',
-                            'labelNames' => array('le'),
-                            'labelValues' => array_merge($labelValues, array($bucket)),
+                            'labelNames' => ['le'],
+                            'labelValues' => array_merge($labelValues, [$bucket]),
                             'value' => $acc
-                        );
+                        ];
                     } else {
                         $acc += $raw[$bucketKey];
-                        $histogram['samples'][] = array(
+                        $histogram['samples'][] = [
                             'name' => $histogram['name'] . '_bucket',
-                            'labelNames' => array('le'),
-                            'labelValues' => array_merge($labelValues, array($bucket)),
+                            'labelNames' => ['le'],
+                            'labelValues' => array_merge($labelValues, [$bucket]),
                             'value' => $acc
-                        );
+                        ];
                     }
                 }
 
                 // Add the count
-                $histogram['samples'][] = array(
+                $histogram['samples'][] = [
                     'name' => $histogram['name'] . '_count',
                     'labelNames' => [],
                     'labelValues' => $labelValues,
                     'value' => $acc
-                );
+                ];
 
                 // Add the sum
-                $histogram['samples'][] = array(
+                $histogram['samples'][] = [
                     'name' => $histogram['name'] . '_sum',
                     'labelNames' => [],
                     'labelValues' => $labelValues,
-                    'value' => $raw[json_encode(array('b' => 'sum', 'labelValues' => $labelValues))]
-                );
+                    'value' => $raw[json_encode(['b' => 'sum', 'labelValues' => $labelValues])]
+                ];
             }
             $histograms[] = $histogram;
         }
@@ -285,12 +285,12 @@ LUA
             unset($raw['__meta']);
             $gauge['samples'] = [];
             foreach ($raw as $k => $value) {
-                $gauge['samples'][] = array(
+                $gauge['samples'][] = [
                     'name' => $gauge['name'],
                     'labelNames' => [],
                     'labelValues' => json_decode($k, true),
                     'value' => $value
-                );
+                ];
             }
             usort($gauge['samples'], function($a, $b){
                 return strcmp(implode("", $a['labelValues']), implode("", $b['labelValues']));
@@ -311,12 +311,12 @@ LUA
             unset($raw['__meta']);
             $counter['samples'] = [];
             foreach ($raw as $k => $value) {
-                $counter['samples'][] = array(
+                $counter['samples'][] = [
                     'name' => $counter['name'],
                     'labelNames' => [],
                     'labelValues' => json_decode($k, true),
                     'value' => $value
-                );
+                ];
             }
             usort($counter['samples'], function($a, $b){
                 return strcmp(implode("", $a['labelValues']), implode("", $b['labelValues']));
@@ -350,7 +350,7 @@ LUA
      */
     private function toMetricKey(array $data) : string
     {
-        return implode(':', array(self::$prefix, $data['type'], $data['name']));
+        return implode(':', [self::$prefix, $data['type'], $data['name']]);
     }
 
 }

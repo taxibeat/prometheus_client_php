@@ -28,31 +28,31 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
      */
     public function itShouldIncreaseWithLabels()
     {
-        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
-        $gauge->inc(array('lalal', 'lululu'));
-        $gauge->inc(array('lalal', 'lululu'));
-        $gauge->inc(array('lalal', 'lululu'));
+        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', ['foo', 'bar']);
+        $gauge->inc(['lalal', 'lululu']);
+        $gauge->inc(['lalal', 'lululu']);
+        $gauge->inc(['lalal', 'lululu']);
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
-                array(
+                [
                     new MetricFamilySamples(
-                        array(
+                        [
                             'type' => Counter::TYPE,
                             'help' => 'this is for testing',
                             'name' => 'test_some_metric',
-                            'labelNames' => array('foo', 'bar'),
-                            'samples' => array(
-                                array(
-                                    'labelValues' => array('lalal', 'lululu'),
+                            'labelNames' => ['foo', 'bar'],
+                            'samples' => [
+                                [
+                                    'labelValues' => ['lalal', 'lululu'],
                                     'value' => 3,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => array()
-                                ),
-                            )
-                        )
+                                    'labelNames' => []
+                                ],
+                            ]
+                        ]
                     )
-                )
+                ]
             )
         );
     }
@@ -62,34 +62,34 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
      */
     public function itShouldIncreaseWithLabelsAndDefaults()
     {
-        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
+        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', ['foo', 'bar']);
 
         $counter->applyDefaultLabels(['test_foo' => 'test_bar']);
 
-        $counter->inc(array('lalal', 'lululu'));
-        $counter->inc(array('lalal', 'lululu'));
-        $counter->inc(array('lalal', 'lululu'));
+        $counter->inc(['lalal', 'lululu']);
+        $counter->inc(['lalal', 'lululu']);
+        $counter->inc(['lalal', 'lululu']);
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
-                array(
+                [
                     new MetricFamilySamples(
-                        array(
+                        [
                             'type' => Counter::TYPE,
                             'help' => 'this is for testing',
                             'name' => 'test_some_metric',
-                            'labelNames' => array('foo', 'bar', 'test_foo'),
-                            'samples' => array(
-                                array(
-                                    'labelValues' => array('lalal', 'lululu', 'test_bar'),
+                            'labelNames' => ['foo', 'bar', 'test_foo'],
+                            'samples' => [
+                                [
+                                    'labelValues' => ['lalal', 'lululu', 'test_bar'],
                                     'value' => 3,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => array()
-                                ),
-                            )
-                        )
+                                    'labelNames' => []
+                                ],
+                            ]
+                        ]
                     )
-                )
+                ]
             )
         );
     }
@@ -99,34 +99,34 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
      */
     public function itShouldIncreaseWithoutLabelsAndDefaults()
     {
-        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array());
+        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', []);
 
         $counter->applyDefaultLabels(['test_foo' => 'test_bar']);
 
-        $counter->inc(array());
-        $counter->inc(array());
-        $counter->inc(array());
+        $counter->inc([]);
+        $counter->inc([]);
+        $counter->inc([]);
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
-                array(
+                [
                     new MetricFamilySamples(
-                        array(
+                        [
                             'type' => Counter::TYPE,
                             'help' => 'this is for testing',
                             'name' => 'test_some_metric',
-                            'labelNames' => array('test_foo'),
-                            'samples' => array(
-                                array(
-                                    'labelValues' => array('test_bar'),
+                            'labelNames' => ['test_foo'],
+                            'samples' => [
+                                [
+                                    'labelValues' => ['test_bar'],
                                     'value' => 3,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => array()
-                                ),
-                            )
-                        )
+                                    'labelNames' => []
+                                ],
+                            ]
+                        ]
                     )
-                )
+                ]
             )
         );
     }
@@ -141,24 +141,24 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
-                array(
+                [
                     new MetricFamilySamples(
-                        array(
+                        [
                             'type' => Counter::TYPE,
                             'help' => 'this is for testing',
                             'name' => 'test_some_metric',
-                            'labelNames' => array(),
-                            'samples' => array(
-                                array(
-                                    'labelValues' => array(),
+                            'labelNames' => [],
+                            'samples' => [
+                                [
+                                    'labelValues' => [],
                                     'value' => 1,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => array()
-                                ),
-                            )
-                        )
+                                    'labelNames' => []
+                                ],
+                            ]
+                        ]
                     )
-                )
+                ]
             )
         );
     }
@@ -168,30 +168,30 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
      */
     public function itShouldIncreaseTheCounterByAnArbitraryInteger()
     {
-        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
-        $gauge->inc(array('lalal', 'lululu'));
-        $gauge->incBy(123, array('lalal', 'lululu'));
+        $gauge = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', ['foo', 'bar']);
+        $gauge->inc(['lalal', 'lululu']);
+        $gauge->incBy(123, ['lalal', 'lululu']);
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
-                array(
+                [
                     new MetricFamilySamples(
-                        array(
+                        [
                             'type' => Counter::TYPE,
                             'help' => 'this is for testing',
                             'name' => 'test_some_metric',
-                            'labelNames' => array('foo', 'bar'),
-                            'samples' => array(
-                                array(
-                                    'labelValues' => array('lalal', 'lululu'),
+                            'labelNames' => ['foo', 'bar'],
+                            'samples' => [
+                                [
+                                    'labelValues' => ['lalal', 'lululu'],
                                     'value' => 124,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => array()
-                                ),
-                            )
-                        )
+                                    'labelNames' => []
+                                ],
+                            ]
+                        ]
                     )
-                )
+                ]
             )
         );
     }
@@ -201,33 +201,33 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
      */
     public function itShouldIncreaseTheCounterByAnArbitraryIntegerAndDefaults()
     {
-        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', array('foo', 'bar'));
+        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing', ['foo', 'bar']);
 
         $counter->applyDefaultLabels(['test_foo' => 'test_bar']);
 
-        $counter->inc(array('lalal', 'lululu'));
-        $counter->incBy(123, array('lalal', 'lululu'));
+        $counter->inc(['lalal', 'lululu']);
+        $counter->incBy(123, ['lalal', 'lululu']);
         $this->assertThat(
             $this->adapter->collect(),
             $this->equalTo(
-                array(
+                [
                     new MetricFamilySamples(
-                        array(
+                        [
                             'type' => Counter::TYPE,
                             'help' => 'this is for testing',
                             'name' => 'test_some_metric',
-                            'labelNames' => array('foo', 'bar', 'test_foo'),
-                            'samples' => array(
-                                array(
-                                    'labelValues' => array('lalal', 'lululu', 'test_bar'),
+                            'labelNames' => ['foo', 'bar', 'test_foo'],
+                            'samples' => [
+                                [
+                                    'labelValues' => ['lalal', 'lululu', 'test_bar'],
                                     'value' => 124,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => array()
-                                ),
-                            )
-                        )
+                                    'labelNames' => []
+                                ],
+                            ]
+                        ]
                     )
-                )
+                ]
             )
         );
     }
@@ -246,7 +246,7 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
      */
     public function itShouldRejectInvalidLabelNames()
     {
-        new Counter($this->adapter, 'test', 'some_metric', 'help', array('invalid label'));
+        new Counter($this->adapter, 'test', 'some_metric', 'help', ['invalid label']);
     }
 
     /**
@@ -258,8 +258,8 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
     public function isShouldAcceptAnySequenceOfBasicLatinCharactersForLabelValues($value)
     {
         $label = 'foo';
-        $histogram = new Counter($this->adapter, 'test', 'some_metric', 'help', array($label));
-        $histogram->inc(array($value));
+        $histogram = new Counter($this->adapter, 'test', 'some_metric', 'help', [$label]);
+        $histogram->inc([$value]);
 
         $metrics = $this->adapter->collect();
         self::assertInternalType('array', $metrics);
@@ -289,7 +289,7 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
         // Basic Latin
         // See https://en.wikipedia.org/wiki/List_of_Unicode_characters#Basic_Latin
         for ($i = 32; $i <= 121; $i++) {
-            $cases['ASCII code ' . $i] = array(chr($i));
+            $cases['ASCII code ' . $i] = [chr($i)];
         }
         return $cases;
     }
