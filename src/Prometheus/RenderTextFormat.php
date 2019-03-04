@@ -45,7 +45,11 @@ class RenderTextFormat
         return $sample->getName() . ' ' . $sample->getValue();
     }
 
-    private function escapeLabelValue(string $v) : string
+    /**
+     * @param  mixed $v
+     * @return string
+     */
+    private function escapeLabelValue($v) : string
     {
         $v = str_replace("\\", "\\\\", $v);
         $v = str_replace("\n", "\\n", $v);
