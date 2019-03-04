@@ -330,7 +330,7 @@ LUA
      * @param  string $cmd
      * @return string
      */
-    private function getRedisCommand(string $cmd) : string
+    private function getRedisCommand(int $cmd) : string
     {
         switch ($cmd) {
             case Adapter::COMMAND_INCREMENT_INTEGER:
