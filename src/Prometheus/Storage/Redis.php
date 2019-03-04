@@ -194,7 +194,7 @@ LUA
             if ($this->options['password']) {
                 $this->redis->auth($this->options['password']);
             }
-            $this->redis->setOption(\Redis::OPT_READ_TIMEOUT, $this->options['read_timeout']);
+            $this->redis->setOption(\Redis::OPT_READ_TIMEOUT, (string) $this->options['read_timeout']);
         } catch (\RedisException $e) {
             throw new StorageException("Can't connect to Redis server", 0, $e);
         }

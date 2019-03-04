@@ -22,7 +22,7 @@ abstract class Collector
      * @param string $help
      * @param array $labels
      */
-    public function __construct(Adapter $storageAdapter, $namespace, $name, $help, $labels = array())
+    public function __construct(Adapter $storageAdapter, $namespace, $name, $help, $labels = [])
     {
         $this->storageAdapter = $storageAdapter;
         $metricName = ($namespace ? $namespace . '_' : '') . $name;

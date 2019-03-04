@@ -19,7 +19,7 @@ class Histogram extends Collector
      * @param array $labels
      * @param array $buckets
      */
-    public function __construct(Adapter $adapter, $namespace, $name, $help, $labels = array(), $buckets = null)
+    public function __construct(Adapter $adapter, $namespace, $name, $help, $labels = [], $buckets = null)
     {
         parent::__construct($adapter, $namespace, $name, $help, $labels);
 
@@ -62,7 +62,7 @@ class Histogram extends Collector
      * @param double $value e.g. 123
      * @param array $labels e.g. ['status', 'opcode']
      */
-    public function observe($value, $labels = array())
+    public function observe($value, $labels = [])
     {
         $labels = $this->setDefaultLabelValues($labels);
 

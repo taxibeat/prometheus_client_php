@@ -13,7 +13,7 @@ class Gauge extends Collector
      * @param double $value e.g. 123
      * @param array $labels e.g. ['status', 'opcode']
      */
-    public function set($value, $labels = array())
+    public function set($value, $labels = [])
     {
         $labels = $this->setDefaultLabelValues($labels);
 
@@ -40,12 +40,12 @@ class Gauge extends Collector
         return self::TYPE;
     }
 
-    public function inc($labels = array())
+    public function inc($labels = [])
     {
         $this->incBy(1, $labels);
     }
 
-    public function incBy($value, $labels = array())
+    public function incBy($value, $labels = [])
     {
         $labels = $this->setDefaultLabelValues($labels);
 
@@ -64,12 +64,12 @@ class Gauge extends Collector
         );
     }
 
-    public function dec($labels = array())
+    public function dec($labels = [])
     {
         $this->decBy(1, $labels);
     }
 
-    public function decBy($value, $labels = array())
+    public function decBy($value, $labels = [])
     {
         $this->incBy(-$value, $labels);
     }
