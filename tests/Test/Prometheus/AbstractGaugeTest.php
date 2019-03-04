@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Test\Prometheus;
 
 use Prometheus\Gauge;
