@@ -159,7 +159,7 @@ LUA
         unset($metaData['value']);
         unset($metaData['labelValues']);
         unset($metaData['command']);
-        $result = $this->redis->eval(<<<LUA
+        $this->redis->eval(<<<LUA
 local result = redis.call(KEYS[2], KEYS[1], KEYS[4], ARGV[1])
 if result == tonumber(ARGV[1]) then
     redis.call('hMSet', KEYS[1], '__meta', ARGV[2])
@@ -168,17 +168,16 @@ end
 return result
 LUA
             ,
-            array(
+            [
                 $this->toMetricKey($data),
                 $this->getRedisCommand($data['command']),
                 self::$prefix . Counter::TYPE . self::PROMETHEUS_METRIC_KEYS_SUFFIX,
                 json_encode($data['labelValues']),
                 $data['value'],
                 json_encode($metaData),
-            ),
+            ],
             4
         );
-        return $result;
     }
 
     /**
