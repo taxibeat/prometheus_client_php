@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Test\Prometheus;
-
 
 use Prometheus\CollectorRegistry;
 use Prometheus\Exception\MetricsRegistrationException;

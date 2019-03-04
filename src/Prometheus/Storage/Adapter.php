@@ -1,4 +1,6 @@
 <?php
+declare(strict_types = 1);
+
 namespace Prometheus\Storage;
 
 use Prometheus\Collector;
@@ -14,11 +16,11 @@ interface Adapter
     /**
      * @return MetricFamilySamples[]
      */
-    public function collect();
+    public function collect() : array;
 
-    public function updateHistogram(array $data);
+    public function updateHistogram(array $data) : void;
 
-    public function updateGauge(array $data);
+    public function updateGauge(array $data) : void;
 
-    public function updateCounter(array $data);
+    public function updateCounter(array $data) : void;
 }
