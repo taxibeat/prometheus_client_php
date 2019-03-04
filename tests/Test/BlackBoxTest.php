@@ -3,9 +3,8 @@ namespace Test;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
-use PHPUnit_Framework_TestCase;
 
-class BlackBoxTest extends PHPUnit_Framework_TestCase
+class BlackBoxTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Client

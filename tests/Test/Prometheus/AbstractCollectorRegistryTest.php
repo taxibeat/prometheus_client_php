@@ -4,7 +4,6 @@
 namespace Test\Prometheus;
 
 
-use PHPUnit_Framework_TestCase;
 use Prometheus\CollectorRegistry;
 use Prometheus\Exception\MetricsRegistrationException;
 use Prometheus\Histogram;
@@ -12,7 +11,7 @@ use Prometheus\RenderTextFormat;
 use Prometheus\Storage\Adapter;
 use Prometheus\Storage\Redis;
 
-abstract class AbstractCollectorRegistryTest extends PHPUnit_Framework_TestCase
+abstract class AbstractCollectorRegistryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Adapter

@@ -3,7 +3,6 @@
 
 namespace Test\Prometheus;
 
-use PHPUnit_Framework_TestCase;
 use Prometheus\Counter;
 use Prometheus\MetricFamilySamples;
 use Prometheus\Sample;
@@ -12,7 +11,7 @@ use Prometheus\Storage\Adapter;
 /**
  * See https://prometheus.io/docs/instrumenting/exposition_formats/
  */
-abstract class AbstractCounterTest extends PHPUnit_Framework_TestCase
+abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Adapter
