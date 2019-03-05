@@ -13,7 +13,7 @@ class PushGateway
      * PushGateway constructor.
      * @param $address string host:port of the push gateway
      */
-    public function __construct($address)
+    public function __construct(string $address)
     {
         $this->address = $address;
     }

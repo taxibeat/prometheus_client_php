@@ -231,6 +231,19 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
             )
         );
     }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Labels are not defined correctly
+     */
+    public function itShouldThrowLabelsAreNotDefinedCorrectly()
+    {
+        $counter = new Counter($this->adapter, 'test', 'some_metric', 'this is for testing');
+        $counter->applyDefaultLabels(['fu', 'bar']);
+        $counter->incBy(123, ['lalal', 'lululu']);
+    }
+
     /**
      * @test
      * @expectedException \InvalidArgumentException

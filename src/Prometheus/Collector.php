@@ -65,15 +65,10 @@ abstract class Collector
         return $this->help;
     }
 
-    public function getKey() : string
-    {
-        return sha1($this->getName() . serialize($this->getLabelNames()));
-    }
-
     /**
-     * @param $labels
+     * @param array $labels
      */
-    protected function assertLabelsAreDefinedCorrectly(array $labels) : void
+    protected function assertLabelsAreDefinedCorrectly(array $labels = []) : void
     {
         if (count($labels) != count($this->labels)) {
             throw new \InvalidArgumentException(sprintf('Labels are not defined correctly: ', print_r($labels, true)));
