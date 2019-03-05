@@ -4,4 +4,14 @@
             <directory>./tests/Test/Prometheus</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory suffix=".php">./vendor</directory>
+                <file>./vendor/autoload.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>

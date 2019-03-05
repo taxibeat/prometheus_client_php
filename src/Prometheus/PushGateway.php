@@ -1,8 +1,7 @@
 <?php
-
+declare(strict_types = 1);
 
 namespace Prometheus;
-
 
 use GuzzleHttp\Client;
 
@@ -14,7 +13,7 @@ class PushGateway
      * PushGateway constructor.
      * @param $address string host:port of the push gateway
      */
-    public function __construct($address)
+    public function __construct(string $address)
     {
         $this->address = $address;
     }
@@ -26,7 +25,7 @@ class PushGateway
      * @param $job
      * @param $groupingKey
      */
-    public function push(CollectorRegistry $collectorRegistry, $job, $groupingKey = null)
+    public function push(CollectorRegistry $collectorRegistry, string $job, array $groupingKey = null) : void
     {
         $this->doRequest($collectorRegistry, $job, $groupingKey, 'put');
     }
@@ -38,7 +37,7 @@ class PushGateway
      * @param $job
      * @param $groupingKey
      */
-    public function pushAdd(CollectorRegistry $collectorRegistry, $job, $groupingKey = null)
+    public function pushAdd(CollectorRegistry $collectorRegistry, string $job, array $groupingKey = null) : void
     {
         $this->doRequest($collectorRegistry, $job, $groupingKey, 'post');
     }
@@ -49,7 +48,7 @@ class PushGateway
      * @param $job
      * @param $groupingKey
      */
-    public function delete($job, $groupingKey = null)
+    public function delete(string $job, array $groupingKey = null) : void
     {
         $this->doRequest(null, $job, $groupingKey, 'delete');
     }
@@ -60,7 +59,7 @@ class PushGateway
      * @param $groupingKey
      * @param $method
      */
-    private function doRequest(CollectorRegistry $collectorRegistry, $job, $groupingKey, $method)
+    private function doRequest(CollectorRegistry $collectorRegistry = null, string $job, array $groupingKey = null, string $method)
     {
         $url = "http://" . $this->address . "/metrics/job/" . $job;
         if (!empty($groupingKey)) {
@@ -69,13 +68,13 @@ class PushGateway
             }
         }
         $client = new Client();
-        $requestOptions = array(
-            'headers' => array(
+        $requestOptions = [
+            'headers' => [
                 'Content-Type' => RenderTextFormat::MIME_TYPE
-            ),
+            ],
             'connect_timeout' => 10,
             'timeout' => 20,
-        );
+        ];
         if ($method != 'delete') {
             $renderer = new RenderTextFormat();
             $requestOptions['body'] = $renderer->render($collectorRegistry->getMetricFamilySamples());
