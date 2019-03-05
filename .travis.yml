@@ -17,3 +17,8 @@ before_script:
 
 script:
   - vendor/bin/phpunit --verbose --colors
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
+
+after_success:
+  - export CODECOV_TOKEN="ff32f578-b33e-490e-893c-b9800e0ab00f"
+  - bash <(curl -s https://codecov.io/bash)
