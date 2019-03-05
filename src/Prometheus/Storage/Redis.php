@@ -46,14 +46,6 @@ class Redis implements Adapter
         $this->redis = new \Redis();
     }
 
-    /**
-     * @param array $options
-     */
-    public static function setDefaultOptions(array $options) : void
-    {
-        self::$defaultOptions = array_merge(self::$defaultOptions, $options);
-    }
-
     public static function setPrefix($prefix) : void
     {
         self::$prefix = $prefix;
