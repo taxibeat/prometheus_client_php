@@ -20,10 +20,11 @@ class BlackBoxPushGatewayTest extends \PHPUnit\Framework\TestCase
         $counter = $registry->registerCounter('test', 'some_counter', 'it increases', ['type']);
         $counter->incBy(6, ['blue']);
 
-        $pushGateway = new PushGateway('pushgateway:9091');
+        $httpClient = new Client();
+
+        $pushGateway = new PushGateway($httpClient, 'pushgateway:9091');
         $pushGateway->push($registry, 'my_job', ['instance' => 'foo']);
 
-        $httpClient = new Client();
         $metrics = $httpClient->get("http://pushgateway:9091/metrics")->getBody()->getContents();
         $this->assertContains(
             '# HELP test_some_counter it increases
