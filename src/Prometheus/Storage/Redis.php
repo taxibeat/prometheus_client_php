@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus\Storage;
@@ -59,6 +60,7 @@ class Redis implements Adapter
 
     /**
      * @return MetricFamilySamples[]
+     *
      * @throws StorageException
      */
     public function collect() : array
@@ -67,6 +69,7 @@ class Redis implements Adapter
         $metrics = $this->collectHistograms();
         $metrics = array_merge($metrics, $this->collectGauges());
         $metrics = array_merge($metrics, $this->collectCounters());
+
         return array_map(
             function (array $metric) {
                 return new MetricFamilySamples($metric);
@@ -88,7 +91,8 @@ class Redis implements Adapter
         $metaData = $data;
         unset($metaData['value']);
         unset($metaData['labelValues']);
-        $this->redis->eval(<<<LUA
+        $this->redis->eval(
+            <<<LUA
 local increment = redis.call('hIncrByFloat', KEYS[1], KEYS[2], ARGV[1])
 redis.call('hIncrBy', KEYS[1], KEYS[3], 1)
 if increment == ARGV[1] then
@@ -116,7 +120,8 @@ LUA
         unset($metaData['value']);
         unset($metaData['labelValues']);
         unset($metaData['command']);
-        $this->redis->eval(<<<LUA
+        $this->redis->eval(
+            <<<LUA
 local result = redis.call(KEYS[2], KEYS[1], KEYS[4], ARGV[1])
 
 if KEYS[2] == 'hSet' then
@@ -151,7 +156,8 @@ LUA
         unset($metaData['value']);
         unset($metaData['labelValues']);
         unset($metaData['command']);
-        $this->redis->eval(<<<LUA
+        $this->redis->eval(
+            <<<LUA
 local result = redis.call(KEYS[2], KEYS[1], KEYS[4], ARGV[1])
 if result == tonumber(ARGV[1]) then
     redis.call('hMSet', KEYS[1], '__meta', ARGV[2])
@@ -232,7 +238,7 @@ LUA
                             'name' => $histogram['name'] . '_bucket',
                             'labelNames' => ['le'],
                             'labelValues' => array_merge($labelValues, [$bucket]),
-                            'value' => $acc
+                            'value' => $acc,
                         ];
                     } else {
                         $acc += $raw[$bucketKey];
@@ -240,7 +246,7 @@ LUA
                             'name' => $histogram['name'] . '_bucket',
                             'labelNames' => ['le'],
                             'labelValues' => array_merge($labelValues, [$bucket]),
-                            'value' => $acc
+                            'value' => $acc,
                         ];
                     }
                 }
@@ -250,7 +256,7 @@ LUA
                     'name' => $histogram['name'] . '_count',
                     'labelNames' => [],
                     'labelValues' => $labelValues,
-                    'value' => $acc
+                    'value' => $acc,
                 ];
 
                 // Add the sum
@@ -258,11 +264,12 @@ LUA
                     'name' => $histogram['name'] . '_sum',
                     'labelNames' => [],
                     'labelValues' => $labelValues,
-                    'value' => $raw[json_encode(['b' => 'sum', 'labelValues' => $labelValues])]
+                    'value' => $raw[json_encode(['b' => 'sum', 'labelValues' => $labelValues])],
                 ];
             }
             $histograms[] = $histogram;
         }
+
         return $histograms;
     }
 
@@ -281,14 +288,15 @@ LUA
                     'name' => $gauge['name'],
                     'labelNames' => [],
                     'labelValues' => json_decode($k, true),
-                    'value' => $value
+                    'value' => $value,
                 ];
             }
-            usort($gauge['samples'], function($a, $b){
+            usort($gauge['samples'], function ($a, $b) {
                 return strcmp(implode("", $a['labelValues']), implode("", $b['labelValues']));
             });
             $gauges[] = $gauge;
         }
+
         return $gauges;
     }
 
@@ -307,19 +315,21 @@ LUA
                     'name' => $counter['name'],
                     'labelNames' => [],
                     'labelValues' => json_decode($k, true),
-                    'value' => $value
+                    'value' => $value,
                 ];
             }
-            usort($counter['samples'], function($a, $b){
+            usort($counter['samples'], function ($a, $b) {
                 return strcmp(implode("", $a['labelValues']), implode("", $b['labelValues']));
             });
             $counters[] = $counter;
         }
+
         return $counters;
     }
 
     /**
-     * @param  string $cmd
+     * @param string $cmd
+     *
      * @return string
      */
     private function getRedisCommand(int $cmd) : string
@@ -338,11 +348,11 @@ LUA
 
     /**
      * @param array $data
+     *
      * @return string
      */
     private function toMetricKey(array $data) : string
     {
         return implode(':', [self::$prefix, $data['type'], $data['name']]);
     }
-
 }

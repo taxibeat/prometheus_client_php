@@ -45,10 +45,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => 123,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -82,10 +82,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu', 'test_bar'],
                                     'value' => 123,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -119,10 +119,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['test_bar'],
                                     'value' => 123,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -153,10 +153,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => [],
                                     'value' => 123,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -187,10 +187,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => [],
                                     'value' => 123.5,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -222,10 +222,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => 124,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -258,10 +258,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu', 'test_bar'],
                                     'value' => 124,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -291,10 +291,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => 124.5,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -324,10 +324,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => -124,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -357,10 +357,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => -124,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -390,10 +390,10 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => 321,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -449,6 +449,7 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @see isShouldAcceptArbitraryLabelValues
+     *
      * @return array
      */
     public function labelValuesDataProvider()
@@ -459,8 +460,9 @@ abstract class AbstractGaugeTest extends \PHPUnit\Framework\TestCase
         for ($i = 32; $i <= 121; $i++) {
             $cases['ASCII code ' . $i] = [chr($i)];
         }
+
         return $cases;
     }
 
-    public abstract function configureAdapter();
+    abstract public function configureAdapter();
 }

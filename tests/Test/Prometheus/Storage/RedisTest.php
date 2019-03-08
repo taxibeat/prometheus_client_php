@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Prometheus\Storage;
 
 /**
@@ -18,5 +17,4 @@ class RedisTest extends \PHPUnit\Framework\TestCase
         $redis = new Redis(['host' => 'doesntexist.test']);
         $redis->flushRedis();
     }
-
 }

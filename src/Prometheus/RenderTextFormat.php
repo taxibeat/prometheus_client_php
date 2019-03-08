@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus;
@@ -9,12 +10,12 @@ class RenderTextFormat
 
     /**
      * @param MetricFamilySamples[] $metrics
+     *
      * @return string
      */
     public function render(array $metrics) : string
     {
-        usort($metrics, function(MetricFamilySamples $a, MetricFamilySamples $b)
-        {
+        usort($metrics, function (MetricFamilySamples $a, MetricFamilySamples $b) {
             return strcmp($a->getName(), $b->getName());
         });
 
@@ -27,6 +28,7 @@ class RenderTextFormat
                 $lines[] = $this->renderSample($metric, $sample);
             }
         }
+
         return implode("\n", $lines) . "\n";
     }
 
@@ -40,13 +42,16 @@ class RenderTextFormat
             foreach ($labels as $labelName => $labelValue) {
                 $escapedLabels[] = $labelName . '="' . $this->escapeLabelValue($labelValue) . '"';
             }
+
             return $sample->getName() . '{' . implode(',', $escapedLabels) . '} ' . $sample->getValue();
         }
+
         return $sample->getName() . ' ' . $sample->getValue();
     }
 
     /**
-     * @param  mixed $v
+     * @param mixed $v
+     *
      * @return string
      */
     private function escapeLabelValue($v) : string
@@ -54,6 +59,7 @@ class RenderTextFormat
         $v = str_replace("\\", "\\\\", $v);
         $v = str_replace("\n", "\\n", $v);
         $v = str_replace("\"", "\\\"", $v);
+
         return $v;
     }
 }

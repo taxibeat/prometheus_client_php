@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus;
@@ -10,7 +11,7 @@ class Gauge extends Collector
     const TYPE = 'gauge';
 
     /**
-     * @param double $value e.g. 123
+     * @param float $value  e.g. 123
      * @param array $labels e.g. ['status', 'opcode']
      */
     public function set($value, array $labels = []) : void
@@ -27,7 +28,7 @@ class Gauge extends Collector
                 'labelNames' => $this->getLabelNames(),
                 'labelValues' => $labels,
                 'value' => $value,
-                'command' => Adapter::COMMAND_SET
+                'command' => Adapter::COMMAND_SET,
             ]
         );
     }
@@ -46,8 +47,9 @@ class Gauge extends Collector
     }
 
     /**
-     * @param  float $value
-     * @param  array $labels
+     * @param float $value
+     * @param array $labels
+     *
      * @return void
      */
     public function incBy(float $value, array $labels = []) : void
@@ -64,7 +66,7 @@ class Gauge extends Collector
                 'labelNames' => $this->getLabelNames(),
                 'labelValues' => $labels,
                 'value' => $value,
-                'command' => Adapter::COMMAND_INCREMENT_FLOAT
+                'command' => Adapter::COMMAND_INCREMENT_FLOAT,
             ]
         );
     }

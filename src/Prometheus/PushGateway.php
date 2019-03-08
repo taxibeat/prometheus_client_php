@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus;
@@ -11,6 +12,7 @@ class PushGateway
 
     /**
      * PushGateway constructor.
+     *
      * @param $address string host:port of the push gateway
      */
     public function __construct(string $address)
@@ -21,6 +23,7 @@ class PushGateway
     /**
      * Pushes all metrics in a Collector, replacing all those with the same job.
      * Uses HTTP PUT.
+     *
      * @param CollectorRegistry $collectorRegistry
      * @param $job
      * @param $groupingKey
@@ -33,6 +36,7 @@ class PushGateway
     /**
      * Pushes all metrics in a Collector, replacing only previously pushed metrics of the same name and job.
      * Uses HTTP POST.
+     *
      * @param CollectorRegistry $collectorRegistry
      * @param $job
      * @param $groupingKey
@@ -45,6 +49,7 @@ class PushGateway
     /**
      * Deletes metrics from the Pushgateway.
      * Uses HTTP POST.
+     *
      * @param $job
      * @param $groupingKey
      */
@@ -70,7 +75,7 @@ class PushGateway
         $client = new Client();
         $requestOptions = [
             'headers' => [
-                'Content-Type' => RenderTextFormat::MIME_TYPE
+                'Content-Type' => RenderTextFormat::MIME_TYPE,
             ],
             'connect_timeout' => 10,
             'timeout' => 20,
@@ -86,5 +91,4 @@ class PushGateway
             throw new \RuntimeException($msg);
         }
     }
-
 }

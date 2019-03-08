@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus;
@@ -17,11 +18,11 @@ abstract class Collector
 
     /**
      * @param Adapter $storageAdapter
-     * @param string $namespace
-     * @param string $name
-     * @param string $help
-     * @param array $labels
-     */ 
+     * @param string  $namespace
+     * @param string  $name
+     * @param string  $help
+     * @param array   $labels
+     */
     public function __construct(Adapter $storageAdapter, string $namespace, string $name, string $help, array $labels = [])
     {
         $this->storageAdapter = $storageAdapter;
@@ -48,7 +49,7 @@ abstract class Collector
     /**
      * @return string
      */
-    public abstract function getType();
+    abstract public function getType();
 
     public function getName() : string
     {
@@ -87,6 +88,7 @@ abstract class Collector
         if (!empty($this->defaultLabels)) {
             return array_merge($labels, array_values($this->defaultLabels));
         }
+
         return $labels;
     }
 }

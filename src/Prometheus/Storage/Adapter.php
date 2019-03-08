@@ -1,11 +1,10 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus\Storage;
 
-use Prometheus\Collector;
 use Prometheus\MetricFamilySamples;
-use Prometheus\Sample;
 
 interface Adapter
 {

@@ -3,11 +3,8 @@
 namespace Test\Prometheus;
 
 use Prometheus\CollectorRegistry;
-use Prometheus\Exception\MetricsRegistrationException;
-use Prometheus\Histogram;
 use Prometheus\RenderTextFormat;
 use Prometheus\Storage\Adapter;
-use Prometheus\Storage\Redis;
 
 abstract class AbstractCollectorRegistryTest extends \PHPUnit\Framework\TestCase
 {
@@ -40,11 +37,11 @@ abstract class AbstractCollectorRegistryTest extends \PHPUnit\Framework\TestCase
         $g->set(35, ['aaa']);
         $g->set(35, ['ccc']);
 
-
         $registry = new CollectorRegistry($this->adapter);
         $this->assertThat(
             $this->renderer->render($registry->getMetricFamilySamples()),
-            $this->equalTo(<<<EOF
+            $this->equalTo(
+                <<<EOF
 # HELP test_some_metric this is for testing
 # TYPE test_some_metric gauge
 test_some_metric{foo="aaa"} 35
@@ -71,7 +68,8 @@ EOF
         $registry = new CollectorRegistry($this->adapter);
         $this->assertThat(
             $this->renderer->render($registry->getMetricFamilySamples()),
-            $this->equalTo(<<<EOF
+            $this->equalTo(
+                <<<EOF
 # HELP test_some_metric this is for testing
 # TYPE test_some_metric counter
 test_some_metric{foo="lalal",bar="lululu"} 3
@@ -98,7 +96,8 @@ EOF
         $registry = new CollectorRegistry($this->adapter);
         $this->assertThat(
             $this->renderer->render($registry->getMetricFamilySamples()),
-            $this->equalTo(<<<EOF
+            $this->equalTo(
+                <<<EOF
 # HELP test_some_metric this is for testing
 # TYPE test_some_metric histogram
 test_some_metric_bucket{foo="gnaaha",bar="hihihi",le="0.1"} 0
@@ -142,7 +141,8 @@ EOF
         $registry = new CollectorRegistry($this->adapter);
         $this->assertThat(
             $this->renderer->render($registry->getMetricFamilySamples()),
-            $this->equalTo(<<<EOF
+            $this->equalTo(
+                <<<EOF
 # HELP test_some_metric this is for testing
 # TYPE test_some_metric histogram
 test_some_metric_bucket{le="0.005"} 0
@@ -173,14 +173,15 @@ EOF
      */
     public function itShouldIncreaseACounterWithoutNamespace()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry
             ->registerCounter('', 'some_quick_counter', 'just a quick measurement')
             ->inc();
 
         $this->assertThat(
             $this->renderer->render($registry->getMetricFamilySamples()),
-            $this->equalTo(<<<EOF
+            $this->equalTo(
+                <<<EOF
 # HELP some_quick_counter just a quick measurement
 # TYPE some_quick_counter counter
 some_quick_counter 1
@@ -196,7 +197,7 @@ EOF
      */
     public function itShouldForbidRegisteringTheSameCounterTwice()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry->registerCounter('foo', 'metric', 'help');
         $registry->registerCounter('foo', 'metric', 'help');
     }
@@ -207,7 +208,7 @@ EOF
      */
     public function itShouldForbidRegisteringTheSameCounterWithDifferentLabels()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry->registerCounter('foo', 'metric', 'help', ["foo", "bar"]);
         $registry->registerCounter('foo', 'metric', 'help', ["spam", "eggs"]);
     }
@@ -218,7 +219,7 @@ EOF
      */
     public function itShouldForbidRegisteringTheSameHistogramTwice()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry->registerHistogram('foo', 'metric', 'help');
         $registry->registerHistogram('foo', 'metric', 'help');
     }
@@ -229,7 +230,7 @@ EOF
      */
     public function itShouldForbidRegisteringTheSameHistogramWithDifferentLabels()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry->registerCounter('foo', 'metric', 'help', ["foo", "bar"]);
         $registry->registerCounter('foo', 'metric', 'help', ["spam", "eggs"]);
     }
@@ -240,7 +241,7 @@ EOF
      */
     public function itShouldForbidRegisteringTheSameGaugeTwice()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry->registerGauge('foo', 'metric', 'help');
         $registry->registerGauge('foo', 'metric', 'help');
     }
@@ -251,7 +252,7 @@ EOF
      */
     public function itShouldForbidRegisteringTheSameGaugeWithDifferentLabels()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry->registerGauge('foo', 'metric', 'help', ["foo", "bar"]);
         $registry->registerGauge('foo', 'metric', 'help', ["spam", "eggs"]);
     }
@@ -262,7 +263,7 @@ EOF
      */
     public function itShouldThrowAnExceptionWhenGettingANonExistentMetric()
     {
-        $registry = new CollectorRegistry( $this->adapter);
+        $registry = new CollectorRegistry($this->adapter);
         $registry->getGauge("not_here", "go_away");
     }
 
@@ -302,6 +303,5 @@ EOF
         $this->assertSame($histogramA, $histogramB);
     }
 
-
-    public abstract function configureAdapter();
+    abstract public function configureAdapter();
 }

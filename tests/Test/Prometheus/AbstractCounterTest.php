@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Test\Prometheus;
 
 use Prometheus\Counter;
@@ -47,11 +46,11 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => 3,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => []
+                                    'labelNames' => [],
                                 ],
-                            ]
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -84,11 +83,11 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
                                     'labelValues' => ['lalal', 'lululu', 'test_bar'],
                                     'value' => 3,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => []
+                                    'labelNames' => [],
                                 ],
-                            ]
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -121,11 +120,11 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
                                     'labelValues' => ['test_bar'],
                                     'value' => 3,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => []
+                                    'labelNames' => [],
                                 ],
-                            ]
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -153,11 +152,11 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
                                     'labelValues' => [],
                                     'value' => 1,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => []
+                                    'labelNames' => [],
                                 ],
-                            ]
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -186,11 +185,11 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => 124,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => []
+                                    'labelNames' => [],
                                 ],
-                            ]
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -222,11 +221,11 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
                                     'labelValues' => ['lalal', 'lululu', 'test_bar'],
                                     'value' => 124,
                                     'name' => 'test_some_metric',
-                                    'labelNames' => []
+                                    'labelNames' => [],
                                 ],
-                            ]
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -294,6 +293,7 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @see isShouldAcceptArbitraryLabelValues
+     *
      * @return array
      */
     public function labelValuesDataProvider()
@@ -304,8 +304,9 @@ abstract class AbstractCounterTest extends \PHPUnit\Framework\TestCase
         for ($i = 32; $i <= 121; $i++) {
             $cases['ASCII code ' . $i] = [chr($i)];
         }
+
         return $cases;
     }
 
-    public abstract function configureAdapter();
+    abstract public function configureAdapter();
 }
