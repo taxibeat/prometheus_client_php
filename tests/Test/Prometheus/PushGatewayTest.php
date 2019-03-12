@@ -31,14 +31,14 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
         $stack->push($history);        
         $client = new Client(['handler' => $stack]);
 
-        $collector_registry = new CollectorRegistry(new APC);
+        $collectorRegistry = new CollectorRegistry(new APC);
 
         $gateway = new PushGateway($client, 'mocked.pushgateway.com::1234');
         $grouping = [
             'label1' => 'val1',
             'label2' => 'val2',
         ];
-        $gateway->push($collector_registry, 'job', $grouping);
+        $gateway->push($collectorRegistry, 'job', $grouping);
         $this->assertCount(1, $container);
     }
 
@@ -57,10 +57,10 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
         $stack->push($history);        
         $client = new Client(['handler' => $stack]);
 
-        $collector_registry = new CollectorRegistry(new APC);
+        $collectorRegistry = new CollectorRegistry(new APC);
 
         $gateway = new PushGateway($client, 'mocked.pushgateway.com::1234');
-        $gateway->pushAdd($collector_registry, 'job', []);
+        $gateway->pushAdd($collectorRegistry, 'job', []);
         $this->assertCount(1, $container);
     }
 
@@ -101,9 +101,9 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
         $stack->push($history);        
         $client = new Client(['handler' => $stack]);
 
-        $collector_registry = new CollectorRegistry(new APC);
+        $collectorRegistry = new CollectorRegistry(new APC);
 
         $gateway = new PushGateway($client, 'mocked.pushgateway.com::1234');
-        $gateway->push($collector_registry, 'job', []);
+        $gateway->push($collectorRegistry, 'job', []);
     }
 }
