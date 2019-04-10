@@ -36,5 +36,6 @@
             "Test\\Prometheus\\": "tests/"
         }
     },
+    "minimum-stability": "dev",
     "license": "Apache-2.0"
 }
