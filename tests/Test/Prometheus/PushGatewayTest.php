@@ -2,17 +2,14 @@
 
 namespace Test\Prometheus;
 
-use Prometheus\PushGateway;
-use Prometheus\CollectorRegistry;
-use Prometheus\Storage\APC;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Exception\RequestException;
-
+use Prometheus\CollectorRegistry;
+use Prometheus\PushGateway;
+use Prometheus\Storage\APC;
 
 class PushGatewayTest extends \PHPUnit\Framework\TestCase
 {
@@ -28,7 +25,7 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
         $container = [];
         $history = Middleware::history($container);
         $stack = HandlerStack::create($mock);
-        $stack->push($history);        
+        $stack->push($history);
         $client = new Client(['handler' => $stack]);
 
         $collectorRegistry = new CollectorRegistry(new APC);
@@ -54,7 +51,7 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
         $container = [];
         $history = Middleware::history($container);
         $stack = HandlerStack::create($mock);
-        $stack->push($history);        
+        $stack->push($history);
         $client = new Client(['handler' => $stack]);
 
         $collectorRegistry = new CollectorRegistry(new APC);
@@ -76,7 +73,7 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
         $container = [];
         $history = Middleware::history($container);
         $stack = HandlerStack::create($mock);
-        $stack->push($history);        
+        $stack->push($history);
         $client = new Client(['handler' => $stack]);
 
         $gateway = new PushGateway($client, 'mocked.pushgateway.com::1234');
@@ -87,7 +84,7 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unexpected status code 
+     * @expectedExceptionMessage Unexpected status code
      */
     public function itShouldThrowUnexpectedStatus()
     {
@@ -98,7 +95,7 @@ class PushGatewayTest extends \PHPUnit\Framework\TestCase
         $container = [];
         $history = Middleware::history($container);
         $stack = HandlerStack::create($mock);
-        $stack->push($history);        
+        $stack->push($history);
         $client = new Client(['handler' => $stack]);
 
         $collectorRegistry = new CollectorRegistry(new APC);
