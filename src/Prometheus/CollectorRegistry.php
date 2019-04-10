@@ -37,9 +37,9 @@ class CollectorRegistry
      */
     private $histograms = [];
 
-    public function __construct(Adapter $redisAdapter)
+    public function __construct(Adapter $adapter)
     {
-        $this->storageAdapter = $redisAdapter;
+        $this->storageAdapter = $adapter;
     }
 
     /**
