@@ -83,10 +83,10 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu'],
                                     'value' => 368,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -153,9 +153,9 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
                                     'labelValues' => [],
                                     'value' => 245,
                                 ],
-                            ]
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -222,10 +222,10 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => [],
                                     'value' => 0.41,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -359,10 +359,10 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => [],
                                     'value' => 0.14,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -433,10 +433,10 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['lalal', 'lululu', 'test_bar'],
                                     'value' => 368,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -505,10 +505,10 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
                                     'labelNames' => [],
                                     'labelValues' => ['test_bar'],
                                     'value' => 245,
-                                ]
-                            ]
+                                ],
+                            ],
                         ]
-                    )
+                    ),
                 ]
             )
         );
@@ -596,6 +596,7 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @see isShouldAcceptArbitraryLabelValues
+     *
      * @return array
      */
     public function labelValuesDataProvider()
@@ -606,8 +607,9 @@ abstract class AbstractHistogramTest extends \PHPUnit\Framework\TestCase
         for ($i = 32; $i <= 121; $i++) {
             $cases['ASCII code ' . $i] = [chr($i)];
         }
+
         return $cases;
     }
 
-    public abstract function configureAdapter();
+    abstract public function configureAdapter();
 }

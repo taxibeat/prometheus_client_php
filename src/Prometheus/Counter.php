@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus;
@@ -26,7 +27,7 @@ class Counter extends Collector
     }
 
     /**
-     * @param int $count e.g. 2
+     * @param int   $count  e.g. 2
      * @param array $labels e.g. ['status', 'opcode']
      */
     public function incBy(int $count, array $labels = []) : void
@@ -43,7 +44,7 @@ class Counter extends Collector
                 'labelNames' => $this->getLabelNames(),
                 'labelValues' => $labels,
                 'value' => $count,
-                'command' => Adapter::COMMAND_INCREMENT_INTEGER
+                'command' => Adapter::COMMAND_INCREMENT_INTEGER,
             ]
         );
     }

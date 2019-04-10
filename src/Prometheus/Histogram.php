@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus;
@@ -13,11 +14,11 @@ class Histogram extends Collector
 
     /**
      * @param Adapter $adapter
-     * @param string $namespace
-     * @param string $name
-     * @param string $help
-     * @param array $labels
-     * @param array $buckets
+     * @param string  $namespace
+     * @param string  $name
+     * @param string  $help
+     * @param array   $labels
+     * @param array   $buckets
      */
     public function __construct(Adapter $adapter, string $namespace, string $name, string $help, array $labels = [], array $buckets = null)
     {
@@ -49,17 +50,18 @@ class Histogram extends Collector
 
     /**
      * List of default buckets suitable for typical web application latency metrics
+     *
      * @return array
      */
     public static function getDefaultBuckets() : array
     {
         return [
-            0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0
+            0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0,
         ];
     }
 
     /**
-     * @param double $value e.g. 123
+     * @param float $value  e.g. 123
      * @param array $labels e.g. ['status', 'opcode']
      */
     public function observe($value, array $labels = []) : void
@@ -84,7 +86,7 @@ class Histogram extends Collector
     /**
      * @return string
      */
-    public function getType() : string 
+    public function getType() : string
     {
         return self::TYPE;
     }

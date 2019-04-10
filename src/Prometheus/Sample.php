@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Prometheus;
@@ -29,7 +30,7 @@ class Sample
     /**
      * @return array
      */
-    public function getLabelNames() : array 
+    public function getLabelNames() : array
     {
         return (array) $this->labelNames;
     }
@@ -43,7 +44,7 @@ class Sample
     }
 
     /**
-     * @return int|double
+     * @return int|float
      */
     public function getValue()
     {
