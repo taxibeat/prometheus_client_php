@@ -8,15 +8,18 @@ use GuzzleHttp\Client;
 
 class PushGateway
 {
+    private $client;
+
     private $address;
 
     /**
      * PushGateway constructor.
-     *
+     * @param $client Client 
      * @param $address string host:port of the push gateway
      */
-    public function __construct(string $address)
-    {
+    public function __construct(Client $client, string $address)
+    {       
+        $this->client = $client;
         $this->address = $address;
     }
 
@@ -72,7 +75,6 @@ class PushGateway
                 $url .= "/" . $label . "/" . $value;
             }
         }
-        $client = new Client();
         $requestOptions = [
             'headers' => [
                 'Content-Type' => RenderTextFormat::MIME_TYPE,
@@ -84,7 +86,7 @@ class PushGateway
             $renderer = new RenderTextFormat();
             $requestOptions['body'] = $renderer->render($collectorRegistry->getMetricFamilySamples());
         }
-        $response = $client->request($method, $url, $requestOptions);
+        $response = $this->client->request($method, $url, $requestOptions);
         $statusCode = $response->getStatusCode();
         if ($statusCode != 202) {
             $msg = "Unexpected status code " . $statusCode . " received from pushgateway " . $this->address . ": " . $response->getBody();
